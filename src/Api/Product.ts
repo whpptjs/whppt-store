@@ -15,6 +15,38 @@ export type Product = {
   isActive: boolean;
   unleashedProductId: string;
 };
+
+export type UnleashedUnitOfMeasure = {
+  Guid: string;
+  Name: string;
+  Obsolete: boolean;
+};
+
+export type UnleashedProduct = {
+  _id: string;
+  DefaultSellPrice: number; // always be in cents
+  MinimumSellPrice: number; // always be in cents,
+  Height: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // cm
+  PackSize: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // mm2
+  Width: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // mm
+  Weight: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // g
+  IsAssembledProduct: boolean;
+  IsComponent: boolean;
+  IsSellable: boolean;
+  NeverDiminishing: boolean;
+  Notes: string;
+  Obsolete: boolean;
+  ProductCode: string;
+  ProductDescription: string;
+  ProductGroup: string;
+  TaxableSales: boolean;
+  UnitOfMeasure: string; // bottles
+  XeroSalesTaxCode: string;
+  XeroSalesTaxRate: number;
+  XeroTaxCode: string;
+  XeroTaxRate: number;
+};
+
 export type ProductList = {
   products: Product[];
   total: number;
@@ -35,7 +67,7 @@ export type ProductApi = {
   create: ({ domainId, product }: { domainId: string; product: Product }) => Promise<Product>;
   save: ({ product }: { product: Product }) => Promise<Product>;
   unleashedSetOnProduct: ({ product }: { product: Product }) => Promise<Product>;
-  listUnleashedProducts: () => Promise<Product[]>;
+  listUnleashedProducts: () => Promise<UnleashedProduct[]>;
   updateUnleashedProducts: () => Promise<{}>;
 };
 export type AppApiConstructor = ({ http }: { http: WhpptHttp }) => ProductApi;
@@ -48,7 +80,7 @@ export const ProductApi: AppApiConstructor = ({ http }) => {
       });
     },
     listUnleashedProducts() {
-      return http.secure.getJson<Product[]>({
+      return http.secure.getJson<UnleashedProduct[]>({
         path: `/api/unleashed/list`,
       });
     },

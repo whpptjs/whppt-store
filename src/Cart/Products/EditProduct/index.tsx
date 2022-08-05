@@ -26,7 +26,7 @@ export const EditProduct: FC<{
         <WhpptTabs tabs={tabs} selectTab={setTab} selectedTab={tab} />
         <WhpptTab selectedTab={tab}>
           <EditProductDetails onChange={onChange} product={product} name="details" />
-          <EditProductUnleashed onChange={onChange} product={product} name="unleashed" />
+          <EditProductUnleashed onChange={onChange} product={product} />
         </WhpptTab>
       </section>
     </div>
