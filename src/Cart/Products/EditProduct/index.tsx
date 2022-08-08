@@ -22,13 +22,15 @@ export const EditProduct: FC<{
           <WhpptButton text="Cancel" onClick={() => close()} />
         </div>
       </section>
-      <section className="whppt-form__content">
-        <WhpptTabs tabs={tabs} selectTab={setTab} selectedTab={tab} />
-        <WhpptTab selectedTab={tab}>
-          <EditProductDetails onChange={onChange} product={product} name="details" />
-          <EditProductUnleashed onChange={onChange} product={product} />
-        </WhpptTab>
-      </section>
+      <div className="whppt-form__content">
+        <section className="whppt-form-section">
+          <WhpptTabs tabs={tabs} selectTab={setTab} selectedTab={tab} />
+          <WhpptTab selectedTab={tab}>
+            <EditProductDetails onChange={onChange} product={product} name="details" />
+            <EditProductUnleashed onChange={onChange} product={product} name="unleashed" />
+          </WhpptTab>
+        </section>
+      </div>
     </div>
   );
 };

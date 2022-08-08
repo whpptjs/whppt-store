@@ -1,8 +1,28 @@
 import * as Yup from 'yup';
 
-export const quantityUnitOfMeasure = ['Bottle', 'Case of 6', 'Case of 12', '2 pack'] as string[];
+export const quantityUnitOfMeasure = [
+  { quantityUnitOfMeasure: 'Bottle' },
+  { quantityUnitOfMeasure: 'Case of 6' },
+  { quantityUnitOfMeasure: 'Case of 12' },
+  { quantityUnitOfMeasure: '2 pack' },
+] as {
+  quantityUnitOfMeasure: string;
+}[];
+export const isActiveStates = [{ isActive: true }, { isActive: false }] as {
+  isActive: boolean;
+}[];
 
-export const bottleSizes = ['375ml', '500ml', '750ml', '1.5L', '3L', '5L', '6L', '9L', '18L'] as string[];
+export const bottleSizes = [
+  { bottleSize: '375ml' },
+  { bottleSize: '500ml' },
+  { bottleSize: '750ml' },
+  { bottleSize: '1.5L' },
+  { bottleSize: '3L' },
+  { bottleSize: '5L' },
+  { bottleSize: '6L' },
+  { bottleSize: '9L' },
+  { bottleSize: '18L' },
+] as { bottleSize: string }[];
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string().max(255, 'Too Long').required('Required'),
@@ -33,4 +53,10 @@ export const defaultProduct = {
   vintage: '',
   bottleSize: '',
   isActive: false,
+  unleashed: {
+    overrideProductCode: false,
+    overrideProductName: false,
+    overrideProductIsActive: false,
+    overrideProductFamily: false,
+  },
 };

@@ -13,9 +13,19 @@ export type Product = {
   vintage: string;
   bottleSize: string;
   isActive: boolean;
-  unleashedProductId: string;
+  unleashed: {
+    _id: string;
+    overrideProductCode: boolean;
+    overrideProductName: boolean;
+    overrideProductIsActive: boolean;
+    overrideProductFamily: boolean;
+  };
 };
 
+export type UnleashedProductGroup = {
+  Guid: string;
+  GroupName: string;
+};
 export type UnleashedUnitOfMeasure = {
   Guid: string;
   Name: string;
@@ -30,6 +40,7 @@ export type UnleashedProduct = {
   PackSize: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // mm2
   Width: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // mm
   Weight: { value: number; unitOfMeasure: UnleashedUnitOfMeasure }; // g
+  ProductGroup: UnleashedProductGroup;
   IsAssembledProduct: boolean;
   IsComponent: boolean;
   IsSellable: boolean;
@@ -38,7 +49,6 @@ export type UnleashedProduct = {
   Obsolete: boolean;
   ProductCode: string;
   ProductDescription: string;
-  ProductGroup: string;
   TaxableSales: boolean;
   UnitOfMeasure: string; // bottles
   XeroSalesTaxCode: string;
@@ -65,6 +75,7 @@ export type ProductApi = {
     search: string;
   }) => Promise<ProductList>;
   create: ({ domainId, product }: { domainId: string; product: Product }) => Promise<Product>;
+  createProductFromUnleashed: ({ domainId, product }: { domainId: string; product: Product }) => Promise<Product>;
   save: ({ product }: { product: Product }) => Promise<Product>;
   unleashedSetOnProduct: ({ product }: { product: Product }) => Promise<Product>;
   listUnleashedProducts: () => Promise<UnleashedProduct[]>;
@@ -92,6 +103,15 @@ export const ProductApi: AppApiConstructor = ({ http }) => {
     create({ domainId, product }) {
       return http.secure.postJson<Product, Product>({
         path: `/api/product/create`,
+        data: {
+          ...product,
+          domainId: product.domainId || domainId,
+        },
+      });
+    },
+    createProductFromUnleashed({ domainId, product }) {
+      return http.secure.postJson<Product, Product>({
+        path: `/api/product/createProductFromUnleashed`,
         data: {
           ...product,
           domainId: product.domainId || domainId,

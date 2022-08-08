@@ -1,7 +1,7 @@
 import { useWhppt, WhpptButton, WhpptTab } from '@whppt/next';
 import React, { FC, useEffect, useState } from 'react';
 import { useWhpptStore } from '../../Context';
-import { AddNewProduct } from './NewProduct';
+import { AddNewBasicProduct, AddNewUnleashedProduct } from './NewProduct';
 import { ProductTable } from './Table';
 import { Product } from '../../Api/Product';
 import { EditProduct } from './EditProduct';
@@ -9,7 +9,8 @@ import { EditProduct } from './EditProduct';
 export const ProductsSettings: FC<WhpptTab> = () => {
   const { domain } = useWhppt();
   const { storeApi } = useWhpptStore();
-  const [addNewProduct, setAddNewProduct] = useState(false);
+  const [addNewBasicProduct, setAddNewBasicProduct] = useState(false);
+  const [addNewUnleashedProduct, setAddNewUnleashedProduct] = useState(false);
   const [editProduct, setEditProduct] = useState({} as Product);
   const [search, setSearch] = useState('');
 
@@ -19,13 +20,15 @@ export const ProductsSettings: FC<WhpptTab> = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const close = (product?: Product) => {
-    setAddNewProduct(false);
+    setAddNewBasicProduct(false);
+    setAddNewUnleashedProduct(false);
     setEditProduct({} as Product);
     if (product) setItems([product, ...items]);
   };
   const newItemSavedNowEdit = (product: Product) => {
-    setAddNewProduct(false);
-    setEditProduct({} as Product);
+    setAddNewBasicProduct(false);
+    setAddNewUnleashedProduct(false);
+    setEditProduct(product);
     setItems([product, ...items]);
   };
 
@@ -40,8 +43,10 @@ export const ProductsSettings: FC<WhpptTab> = () => {
 
   return (
     <div>
-      {addNewProduct ? (
-        <AddNewProduct close={i => close(i)} created={i => newItemSavedNowEdit(i)} />
+      {addNewBasicProduct ? (
+        <AddNewBasicProduct close={i => close(i)} created={i => newItemSavedNowEdit(i)} />
+      ) : addNewUnleashedProduct ? (
+        <AddNewUnleashedProduct close={i => close(i)} created={i => newItemSavedNowEdit(i)} />
       ) : editProduct && editProduct._id ? (
         <EditProduct product={editProduct} onChange={setEditProduct} close={close} />
       ) : (
@@ -56,7 +61,8 @@ export const ProductsSettings: FC<WhpptTab> = () => {
           search={search}
           setSearch={setSearch}>
           <div>
-            <WhpptButton text="Add New Product" icon="plus" onClick={() => setAddNewProduct(true)} />
+            <WhpptButton text="Add New Product" icon="plus" onClick={() => setAddNewBasicProduct(true)} />
+            <WhpptButton text="Add New Product From Unleashed" icon="plus" onClick={() => setAddNewUnleashedProduct(true)} />
           </div>
         </ProductTable>
       )}

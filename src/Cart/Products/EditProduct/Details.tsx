@@ -1,7 +1,7 @@
 import { WhpptButton, WhpptInput, WhpptSelect, WhpptTextArea } from '@whppt/next';
 import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Formik } from 'formik';
-import { quantityUnitOfMeasure, bottleSizes, validationSchema, defaultProduct } from '../defaultProductValues';
+import { quantityUnitOfMeasure, bottleSizes, validationSchema, defaultProduct, isActiveStates } from '../defaultProductValues';
 import { Product } from '../../../Api/Product';
 import { useWhpptStore } from '../../../Context';
 
@@ -30,7 +30,7 @@ export const EditProductDetails: FC<{
   };
 
   return (
-    <div>
+    <div className="whppt-form__content--full-height ">
       <Formik initialValues={productToEdit} validationSchema={validationSchema} onSubmit={values => submitForm({ values })}>
         {({ handleSubmit, setFieldValue, values, errors, handleChange }) => (
           <form onSubmit={handleSubmit}>
@@ -98,34 +98,39 @@ export const EditProductDetails: FC<{
               />
               <WhpptSelect
                 id={'QuantityUnitOfMeasure'}
+                name="quantityUnitOfMeasure"
                 label={'Quantity Unit Of Measure'}
-                onChange={e => setFieldValue('quantityUnitOfMeasure', e)}
+                onChange={e => setFieldValue('quantityUnitOfMeasure', e.quantityUnitOfMeasure)}
                 items={quantityUnitOfMeasure}
-                value={values.quantityUnitOfMeasure}
+                value={values}
                 error={errors.quantityUnitOfMeasure}
-                name="quantityUnitOfMeasure"></WhpptSelect>
+                getOptionLabel={option => option.quantityUnitOfMeasure}
+              />
             </div>
             <div className="whppt-form--flex-apart">
               <WhpptSelect
                 id={'IsActive'}
                 label={'Product Active'}
                 onChange={e => {
-                  setFieldValue('isActive', e === 'Active');
+                  setFieldValue('isActive', e.isActive);
                 }}
-                items={['Active', 'Inactive']}
-                value={`${values.isActive === true ? 'Active' : 'Inactive'}`}
+                items={isActiveStates}
+                value={values}
                 name="isActive"
-                error={errors.isActive}></WhpptSelect>
+                error={errors.isActive}
+                getOptionLabel={option => (option.isActive ? 'Active' : 'Inactive')}
+              />
               <WhpptSelect
                 id={'BottleSize'}
                 label={'Bottle Size Volume'}
-                onChange={e => setFieldValue('bottleSize', e)}
+                name="bottleSize"
+                onChange={e => setFieldValue('bottleSize', e.bottleSize)}
                 items={bottleSizes}
-                value={values.bottleSize}
+                value={values}
                 error={errors.bottleSize}
-                name="bottleSize"></WhpptSelect>
+                getOptionLabel={option => option.bottleSize}
+              />
             </div>
-
             <WhpptTextArea
               value={values.description}
               onChange={e => setFieldValue('description', e)}
