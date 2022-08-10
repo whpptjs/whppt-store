@@ -1,4 +1,5 @@
 import { Http } from '@whppt/next';
+
 import { ProductApi } from './Product';
 
 export type WhpptApi = { product: ProductApi };

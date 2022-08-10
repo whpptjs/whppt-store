@@ -1,4 +1,4 @@
-import { WhpptButton, WhpptCheckbox, WhpptSelect } from '@whppt/next';
+import { toast, WhpptButton, WhpptCheckbox, WhpptSelect } from '@whppt/next';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 import { Product, UnleashedProduct } from '../../../Api/Product';
 import { useWhpptStore } from '../../../Context';
@@ -14,7 +14,6 @@ export const EditProductUnleashed: FC<{
   const [products, setProducts] = useState<UnleashedProduct[]>([]);
   const [productFetchError, setProductFetchError] = useState('');
   const [chosenProductId, setChosenProductId] = useState(product?.unleashed?._id);
-  const [saving, setSaving] = useState(false);
   const [overrideFields, setOverrideFields] = useState({
     overrideProductCode: product?.unleashed?.overrideProductCode || false,
     overrideProductName: product?.unleashed?.overrideProductName || false,
@@ -30,7 +29,6 @@ export const EditProductUnleashed: FC<{
   const chosenProduct = useMemo(() => products && products.find(p => p._id === chosenProductId), [chosenProductId, products]);
 
   const save = () => {
-    setSaving(true);
     const updatedProduct = {
       ...product,
       productCode: chosenProduct?.ProductCode || product.productCode,
@@ -45,17 +43,16 @@ export const EditProductUnleashed: FC<{
         overrideProductFamily: overrideFields.overrideProductFamily,
       },
     } as Product;
-    storeApi.product
-      .unleashedSetOnProduct({ product: updatedProduct })
-      .then(() => {
-        setSaving(false);
-        onChange(updatedProduct);
-      })
-      .catch(err => {
-        console.log('🚀 ~ file: Unleashed.tsx ~ line 30 ~ submitForm ~ err', err);
-        //TODO error handle
-        setSaving(false);
-      });
+
+    const editPromise = storeApi.product.unleashedSetOnProduct({ product: updatedProduct }).then(() => {
+      onChange(updatedProduct);
+    });
+
+    toast.promise(editPromise, {
+      pending: 'Saving...',
+      success: `Product Saved`,
+      error: `Failed to Update Product 🤯`,
+    });
   };
 
   return (
@@ -103,7 +100,6 @@ export const EditProductUnleashed: FC<{
 
       <div className="whppt-form__content--flex">
         <WhpptButton text="Save" icon="save" onClick={() => save()} />
-        {saving && <div>Saving...</div>}
       </div>
     </div>
   );

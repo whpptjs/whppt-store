@@ -1,4 +1,4 @@
-import { useWhppt, WhpptButton, WhpptInput } from '@whppt/next';
+import { toast, useWhppt, WhpptButton, WhpptInput } from '@whppt/next';
 import React, { FC, useState } from 'react';
 import { Formik } from 'formik';
 import { defaultProduct, validationSchemaNewProduct } from '../defaultProductValues';
@@ -12,7 +12,6 @@ export const AddNewBasicProduct: FC<{
   const { storeApi } = useWhpptStore();
 
   const { domain } = useWhppt();
-  const [loading, setLoading] = useState(false);
   const [product] = useState({
     _id: '',
     name: '',
@@ -23,17 +22,16 @@ export const AddNewBasicProduct: FC<{
   } as Product);
 
   const submitForm = ({ values, resetForm }: { values: Product; resetForm: () => void }) => {
-    setLoading(true);
-    storeApi.product
-      .create({ domainId: domain._id as string, product: values })
-      .then((product: Product) => {
-        resetForm();
-        setLoading(false);
-        created(product);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+    const createPromise = storeApi.product.create({ domainId: domain._id as string, product: values }).then((product: Product) => {
+      resetForm();
+      created(product);
+    });
+
+    toast.promise(createPromise, {
+      pending: 'Saving...',
+      success: `Created Product`,
+      error: `Failed to Create Product 🤯`,
+    });
   };
 
   return (
@@ -74,7 +72,6 @@ export const AddNewBasicProduct: FC<{
                   />
                   <div>
                     <WhpptButton text="Save" icon="save" onClick={() => handleSubmit()} />
-                    {loading && <div>Saving...</div>}
                   </div>
                 </form>
               </section>

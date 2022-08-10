@@ -1,8 +1,9 @@
 import React, { createContext, FC, ReactElement, useContext, useMemo } from 'react';
-import { Api } from '../Api';
+import { ProductField, Api } from '../index';
 
 export const WhpptStore = createContext({
   storeApi: Api(),
+  productFields: [] as ProductField[],
 });
 
 WhpptStore.displayName = 'WhpptStoreContext';
@@ -12,11 +13,12 @@ export const useWhpptStore = () => {
 };
 
 export const WhpptStoreApp: FC<{
+  productFields?: any[];
   children: ReactElement | ReactElement[];
-}> = ({ children }) => {
+}> = ({ productFields = [], children }) => {
   const context = useMemo(() => {
-    return { storeApi: Api() };
-  }, []);
+    return { storeApi: Api(), productFields };
+  }, [productFields]);
 
   return <WhpptStore.Provider value={context}>{children}</WhpptStore.Provider>;
 };

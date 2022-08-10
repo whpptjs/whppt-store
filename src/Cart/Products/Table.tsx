@@ -20,9 +20,6 @@ export const ProductTable: FC<{
     { text: 'Code', value: 'productCode' },
   ] as any;
 
-  // const [errorState, setError] = useState<Error>();
-  // const [searchProducts, setSearchProducts] = useState('');
-
   return (
     <div className="whppt-form">
       <section className="whppt-form__actions">{children}</section>

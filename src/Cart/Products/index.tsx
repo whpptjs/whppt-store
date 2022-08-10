@@ -62,7 +62,7 @@ export const ProductsSettings: FC<WhpptTab> = () => {
           setSearch={setSearch}>
           <div>
             <WhpptButton text="Add New Product" icon="plus" onClick={() => setAddNewBasicProduct(true)} />
-            <WhpptButton text="Add New Product From Unleashed" icon="plus" onClick={() => setAddNewUnleashedProduct(true)} />
+            <WhpptButton text="Add New Unleashed Product" icon="plus" onClick={() => setAddNewUnleashedProduct(true)} />
           </div>
         </ProductTable>
       )}
