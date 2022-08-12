@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "lib": ["dom", "es2017"],
     "outDir": "./dist",
-    "module": "esNext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedParameters": true,
     "noUnusedLocals": true,
