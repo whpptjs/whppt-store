@@ -3,6 +3,7 @@ import React, { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Product } from '../../../Api/Product';
 import { EditProductDetails } from './Details';
 import { EditProductUnleashed } from './Unleashed';
+import { EditProductImage } from './Image';
 
 export const EditProduct: FC<{
   close: () => void;
@@ -14,6 +15,7 @@ export const EditProduct: FC<{
   const tabs: Array<WhpptTab> = [
     { name: 'details', label: 'Details' },
     { name: 'unleashed', label: 'Unleashed' },
+    { name: 'image', label: 'Image' },
   ];
   return (
     <div className="whppt-form">
@@ -28,6 +30,7 @@ export const EditProduct: FC<{
           <WhpptTab selectedTab={tab}>
             <EditProductDetails onChange={onChange} product={product} name="details" />
             <EditProductUnleashed onChange={onChange} product={product} name="unleashed" />
+            <EditProductImage onChange={onChange} product={product} name="image" />
           </WhpptTab>
         </section>
       </div>

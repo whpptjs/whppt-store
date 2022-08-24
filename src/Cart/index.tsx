@@ -6,16 +6,18 @@ import { ProductsSettings } from './Products';
 export const CartSettings: FC = () => {
   const { settingsPanel, changeSettingsPanelActiveTab } = useWhppt();
   const tabs: Array<WhpptTab> = [
-    { name: 'general', label: 'General' },
-    { name: 'products', label: 'Products' },
+    { name: 'generals', label: 'General' },
+    { name: 'general', label: 'Products' },
+    // { name: 'products', label: 'Products' },
   ];
 
   return (
     <div>
       <WhpptTabs tabs={tabs} selectTab={changeSettingsPanelActiveTab} selectedTab={settingsPanel.activeTab} />
       <WhpptTab selectedTab={settingsPanel.activeTab}>
-        <CartGeneral name="general" label="General" />
-        <ProductsSettings name="products" label="Products" />
+        <CartGeneral name="generals" label="General" />
+        <ProductsSettings name="general" label="Products" />
+        {/* <ProductsSettings name="products" label="Products" /> */}
       </WhpptTab>
     </div>
   );

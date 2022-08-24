@@ -43,7 +43,7 @@
     "publish:major": "yarn test && yarn build && standard-version --release-as major && yarn publish && git push --follow-tags"
   },
   "dependencies": {
-    "@whppt/next": "^0.0.3-next.7",
+    "@whppt/next": "^0.0.3-next.9",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "yup": "^0.32.11"

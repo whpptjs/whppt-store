@@ -34,7 +34,7 @@ export const ProductsSettings: FC<WhpptTab> = () => {
 
   useEffect(() => {
     storeApi.product
-      .list({ domainId: domain._id as string, limit, currentPage, search })
+      .list({ domainId: (domain._id as string) || 'ntul56ffz4t', limit, currentPage, search })
       .then(({ products, total }: { products: Product[]; total: number }) => {
         setItems(products);
         setTotal(total);
