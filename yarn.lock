@@ -1110,10 +1110,10 @@
     "@typescript-eslint/types" "5.31.0"
     eslint-visitor-keys "^3.3.0"
 
-"@whppt/next@^0.0.3-next.9":
-  version "0.0.3-next.9"
-  resolved "https://registry.yarnpkg.com/@whppt/next/-/next-0.0.3-next.9.tgz#e46a73b8ea8c7430fa076e0943df34f9b1d4c7af"
-  integrity sha512-/ygszaA4K2MZG3o1MktctAK+V1cAvuSltcKlGtqKNqBWASZ4sXmL6bK9WNlq+Xw5EbstrFEZZylWvGuo4NPNSA==
+"@whppt/next@^0.0.3-next.10":
+  version "0.0.3-next.10"
+  resolved "https://registry.yarnpkg.com/@whppt/next/-/next-0.0.3-next.10.tgz#4c79f02e836f46ed21fbbcdceaa49fb7c0790645"
+  integrity sha512-MIccKDjr/UIwKSx3EP/lvT3lOflbSyBxlrbcstKIiUhstq9LtsCfZ0q2PQQFrahhZfZ9lw/nb8qsh1na2rbYYQ==
   dependencies:
     "@tiptap/extension-text-align" "^2.0.0-beta.31"
     "@tiptap/extension-underline" "^2.0.0-beta.25"
